@@ -5,12 +5,14 @@ class CRC {
 	public static String divide(char[] message, char[] key){
 		int n = message.length, m = key.length;
 		
-		for(int i = 0; i < n; i++) {
+		for(int i = 0; i <= n - m; i++) {
 			if(message[i] == '1') {
-				if(n - 1 < m) break;
+				//if(n - 1 < m) break;
+				if (i + m > n) break;
 				
 				for(int j = 0; j < m; j++) {
-					message[i + j] = message[j] == '0' ? message[i + j] : message[i + j] == '1' ? '0' : '1';
+					//message[i + j] = message[j] == '0' ? message[i + j] : message[i + j] == '1' ? '0' : '1';				
+					message[i + j] = (message[i + j] == key[j]) ? '0' : '1';
 				}
 			}
 		}
