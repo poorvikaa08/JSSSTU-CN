@@ -81,7 +81,7 @@ proc finish {} {
 
     exec nam lab13.nam &
     exec echo "Number of packets dropped:" &
-    exec grep -c "^D" lab13.tr &
+    exec grep -c "^D" network.tr &
     exit 0
 }
 
