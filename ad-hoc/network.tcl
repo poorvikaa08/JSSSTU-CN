@@ -6,10 +6,10 @@ set topo [new Topography]
 $topo load_flatgrid 1500 1500
 
 
-set tracefile [open network.tr w]
+set ntrace [open network.tr w]
 set namfile   [open network.nam w]
 
-$ns trace-all $tracefile
+$ns trace-all $ntrace
 $ns namtrace-all $namfile
 $ns namtrace-all-wireless $namfile 1500 1500
 
@@ -76,7 +76,7 @@ $ftp0 attach-agent $tcp0
 proc finish {} {
     global ns tracefile namfile
     $ns flush-trace
-    close $tracefile
+    close $ntrace
     close $namfile
 
     exec nam lab13.nam &
