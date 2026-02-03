@@ -79,7 +79,7 @@ proc finish {} {
     close $ntrace
     close $namfile
 
-    exec nam lab13.nam &
+    exec nam network.nam &
     exec echo "Number of packets dropped:" &
     exec grep -c "^D" network.tr &
     exit 0
