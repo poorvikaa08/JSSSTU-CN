@@ -4,14 +4,41 @@ import java.io.*;
 public class Server {
 
 	public static void main(String[] args) throws Exception {
-		ServerSocket s = new ServerSocket(8000);
+		ServerSocket server = new ServerSocket(8000);
 		
 		System.out.println("Server is ready for connection");
 		
-		Socket socket = s.accept();
+		Socket socket = server.accept();
 		System.out.println("Connection is successful and waiting for the client request");
 		
-		InputStream istream = socket.getInputStream();
+		// read filename from client
+		BufferedReader in = new BufferedReader(
+			new InputStreamReader(socket.getInputStream())
+		);
+		
+		String filename = in.readLine();
+		
+		// read file content
+		BufferedReader file = new BufferedReader(new FileReader(filename));
+		
+		// send content to client
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		
+		String line;
+		
+		while ((line = file.readLine()) != null) {
+			out.println(line);
+		}
+		
+		socket.close();
+		server.close();
+		file.close();
+	}
+}
+
+
+
+	       /*InputStream istream = socket.getInputStream();
 		
 		BufferedReader fileRead = new BufferedReader(new InputStreamReader(istream));
 		
@@ -21,17 +48,4 @@ public class Server {
 		
 		OutputStream ostream = socket.getOutputStream();
 		PrintWriter p = new PrintWriter(ostream, true);
-		
-		
-		String str;
-		
-		while ((str = contentRead.readLine()) != null) {
-			p.println(str);
-		}
-		
-		socket.close();
-		s.close();
-		p.close();
-		contentRead.close();
-	}
-}
+		*/

@@ -42,8 +42,12 @@ for {set j 0} {$j < 5} {incr j} {
 #Define the recv function for the class 'Agent/Ping'
 Agent/Ping instproc recv {from rtt} {
 	$self instvar node_
-	puts "node [$node_ id] received ping answer from $from with round trip time $rtt
-	ms"
+	#puts "node [$node_ id] received ping answer from $from with round trip time $rtt ms"
+	 
+	 #or
+	
+	puts "node [$node_ id] got ping reply from $from (RTT = $rtt ms)"
+	
 }
 
 #Create two ping agents and attach them to n(0) and n(5)

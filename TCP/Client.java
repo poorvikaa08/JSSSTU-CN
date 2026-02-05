@@ -7,26 +7,28 @@ public class Client {
 		
 		Socket socket = new Socket("127.0.0.1", 8000);
 		
+		BufferedReader r = new BufferedReader(
+			new InputStreamReader(System.in)
+		);
+		
 		System.out.print("Enter the filename: ");
-		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
 		String filename = r.readLine();
 		
-		OutputStream ostream = socket.getOutputStream();
+		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        	out.println(filename);
 		
-		PrintWriter p = new PrintWriter(ostream, true);
-		p.println(filename);
-		
-		InputStream istream = socket.getInputStream();
-  		BufferedReader socketRead = new BufferedReader(new InputStreamReader(istream));
+		BufferedReader in = new BufferedReader(
+                	new InputStreamReader(socket.getInputStream())
+     		);
   		
- 		String str;
+ 		String line;
+ 		
+        	while ((line = in.readLine()) != null) {
+            		System.out.println(line);
+        	}
 
-		while ((str = socketRead.readLine()) != null){
-   			System.out.println(str);
-  		}
 
-  		p.close();
-  		socketRead.close();
+  		socket.close();
   		r.close();
 	}
 }
