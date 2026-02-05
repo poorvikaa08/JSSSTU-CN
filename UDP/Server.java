@@ -2,27 +2,30 @@ import java.net.*;
 
 class Server { 
         public static void main(String args[]) throws Exception {
-                DatagramSocket serverSocket = new DatagramSocket(5454);
-                System.out.println("Server is Ready for the client");
+                DatagramSocket socket = new DatagramSocket(5454);
+                System.out.println("UDP Server is Ready for the client");
                 
-                byte[] recieveData = new byte[1024];
-                byte[] sendData = new byte[1024];
+                byte[] receiveData = new byte[1024];
+
                 
-                while (true){
-                        DatagramPacket recievePacket = new DatagramPacket(recieveData, recieveData.length);
-                        serverSocket.receive(recievePacket);
+                while (true) {
+                	// recieve packet
+                        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                        socket.receive(receivePacket);
                         
-                        String sentence = new String(recievePacket.getData());
-                        System.out.println("RECEIVED: " + sentence);
+                        String msg = new String(receivePacket.getData());
+                        System.out.println("RECEIVED: " + msg);
                         
-                        InetAddress IPAddress = recievePacket.getAddress();
-                        int port = recievePacket.getPort();
+                        // convert to uppercase
+			byte[] sendData = msg.toUpperCase().getBytes();
+                       
+			// send back to client
+                        DatagramPacket sendPacket = new DatagramPacket(
+                        	sendData, sendData.length,
+                        	receivePacket.getAddress(), receivePacket.getPort()
+                        );
                         
-                        String capitalized = sentence.toUpperCase();
-                        sendData = capitalized.getBytes();
-                        
-                        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-                        serverSocket.send(sendPacket);
+                        socket.send(sendPacket);
                 }
         }
 }

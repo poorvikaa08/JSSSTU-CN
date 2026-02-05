@@ -3,28 +3,32 @@ import java.net.*;
 
 class Client {
 	public static void main(String[] args) throws Exception {
-		DatagramSocket clientSocket = new DatagramSocket();
-                BufferedReader inFormUser = new BufferedReader(new InputStreamReader(System.in));
-                
+		DatagramSocket socket = new DatagramSocket();
                 InetAddress IPAddress = InetAddress.getByName("localhost");
                 
-                byte[] sendData = new byte[1024];
-                byte[] receiveData = new byte[1024];
+                BufferedReader r = new BufferedReader(
+                	new InputStreamReader(System.in)
+                );
                 
-                System.out.println("Enter the string in lowercase so that you recieve the message in Uppercase from the server");
-                
-                String sentence = inFormUser.readLine();
-                sendData = sentence.getBytes();
-                
+                System.out.println("Enter the text in lowercase: ");
+		byte[] sendData = r.readLine().getBytes();
+
+		// send to server		
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 5454);
-                clientSocket.send(sendPacket);
+        	socket.send(sendPacket);
+        	
+               	// receive from server
+               
+             	byte[] receiveData = new byte[1024];
+        	DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        	socket.receive(receivePacket);
+
+        	String reply = new String(
+                	receivePacket.getData(), 0, receivePacket.getLength()
+        	);
+        	
+        	System.out.println("FROM SERVER: " + reply);
                 
-                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                clientSocket.receive(receivePacket);
-                
-                String modifiedSentence = new String(receivePacket.getData());
-                System.out.println("FROM SERVER: "+ modifiedSentence);
-                
-                clientSocket.close();
+                socket.close();
         }
 }
