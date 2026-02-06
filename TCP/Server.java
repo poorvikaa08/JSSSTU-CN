@@ -11,7 +11,7 @@ public class Server {
 		Socket socket = server.accept();
 		System.out.println("Connection is successful and waiting for the client request");
 		
-		// read filename from client
+		// recieve filename from client
 		BufferedReader in = new BufferedReader(
 			new InputStreamReader(socket.getInputStream())
 		);
@@ -19,13 +19,18 @@ public class Server {
 		String filename = in.readLine();
 		
 		// read file content
-		BufferedReader file = new BufferedReader(new FileReader(filename));
+		BufferedReader file = new BufferedReader(
+			new FileReader(filename)
+		);
+		
 		
 		// send content to client
-		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+		PrintWriter out = new PrintWriter(
+			socket.getOutputStream(), true
+		);
 		
 		String line;
-		
+
 		while ((line = file.readLine()) != null) {
 			out.println(line);
 		}
@@ -36,16 +41,3 @@ public class Server {
 	}
 }
 
-
-
-	       /*InputStream istream = socket.getInputStream();
-		
-		BufferedReader fileRead = new BufferedReader(new InputStreamReader(istream));
-		
-		String filename = fileRead.readLine();
-		
-		BufferedReader contentRead = new BufferedReader(new FileReader(filename));
-		
-		OutputStream ostream = socket.getOutputStream();
-		PrintWriter p = new PrintWriter(ostream, true);
-		*/

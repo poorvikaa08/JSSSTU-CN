@@ -14,9 +14,15 @@ public class Client {
 		System.out.print("Enter the filename: ");
 		String filename = r.readLine();
 		
-		PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        	out.println(filename);
 		
+		// send filename to server
+		PrintWriter out = new PrintWriter(
+			socket.getOutputStream(), true
+		);
+        	out.println(filename);
+        	
+        	
+		// receieve file content
 		BufferedReader in = new BufferedReader(
                 	new InputStreamReader(socket.getInputStream())
      		);
