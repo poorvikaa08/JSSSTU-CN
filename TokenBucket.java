@@ -31,15 +31,15 @@ public class TokenBucket {
            	 // Generate tokens for this iteration
             	tokens = Math.min(tokens + tokenRate, capacity);
 		
-		int before = tokens;
+		int available = tokens;
             	// Check if packet can be processed
             	if (p <= tokens) {
                 	tokens -= p;
                 	sent = p;
-                	System.out.println(p + "\t\t" + before + "\t\t\t" + sent + "\t" + tokens +  "\t\t\tAccepted");
+                	System.out.println(p + "\t\t" + available + "\t\t\t" + sent + "\t" + tokens +  "\t\t\tAccepted");
             	} else {
                 	sent = 0;
-                	System.out.println(p + "\t\t" + tokens + "\t\t\t" + sent + "\t" + tokens + "\t\t\tDropped");
+                	System.out.println(p + "\t\t" + available + "\t\t\t" + sent + "\t" + tokens + "\t\t\tDropped");
             	}
         }
         
