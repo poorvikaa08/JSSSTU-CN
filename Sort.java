@@ -49,10 +49,24 @@ class Sort {
 			F[i] = new Frame(num, str);
 		}
 		
+		/*
 		List <Frame> framelist = new ArrayList<>(Arrays.asList(F));
 		
 		Collections.shuffle(framelist);
 		F = framelist.toArray(new Frame[0]);
+		
+		
+		*/
+		
+		// shuffle the input array
+		
+		List <Frame> list = new ArrayList<>();
+		for (Frame f: F) list.add(f);
+		
+		Collections.shuffle(list);
+		
+		F = list.toArray(new Frame[0]);
+		
 		
 		System.out.println("Frames before sorting");
 		for(int i = 0; i < n; i++) {

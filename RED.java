@@ -4,6 +4,7 @@ class RED {
 	static class RandomEarlyDetection {
 		private double minT, maxT, maxDropProb;
 		private int size, curr;
+		private Random r = new Random();
 		
 		public RandomEarlyDetection(double min, double max, double prob, int n) {
 			minT = min;
@@ -15,7 +16,7 @@ class RED {
 		
 		public double calculateDropProb() {
 			if (curr < minT) return 0.0;
-			else if (curr >= maxT) return 1.0;
+			else if (curr >= maxT) return maxDropProb;
 			else {
 				double p = maxDropProb * ((curr - minT) / (maxT - minT)); 
 				return p;
@@ -23,7 +24,7 @@ class RED {
 		}
 		
 		public boolean shouldDrop(double prob) {
-			Random r = new Random();
+
 			return r.nextDouble() < prob;
 		}
 		

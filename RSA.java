@@ -2,14 +2,14 @@ import java.util.*;
 import java.math.*;
 
 class RSA_Algorithm {
-	BigInteger publicKey, privateKey, mod;
+	BigInteger publicKey, privateKey, n;
 	
 	void getKeys(int bitlen) {
 		Random r = new Random();
 		BigInteger p = BigInteger.probablePrime(bitlen, r);
 		BigInteger q = BigInteger.probablePrime(bitlen, r);
 		
-		mod = p.multiply(q);
+		n = p.multiply(q);
 		// n = p * q;
 		
 		// Compute Euler's toitent
@@ -32,14 +32,14 @@ class RSA_Algorithm {
 	}
 
 	BigInteger encrypt(BigInteger m) {
-		return m.modPow(publicKey, mod);
+		return m.modPow(publicKey, n);
 		// C = M^e mod n
 
 		
 	}
 	
 	BigInteger decrypt(BigInteger c) {
-		return c.modPow(privateKey, mod);
+		return c.modPow(privateKey, n);
 		// M = C^d mod n
 	}
 }
